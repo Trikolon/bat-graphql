@@ -16,9 +16,10 @@ export default class Database {
     this.models = {
       player: this.sequelize.import(`${__dirname}/models/player`),
       ban: this.sequelize.import(`${__dirname}/models/ban`),
+      mute: this.sequelize.import(`${__dirname}/models/mute`),
     };
 
-    Object.values(this.models).forEach((model) => model.associate(this.models));
+    Object.values(this.models).forEach(model => model.associate(this.models));
   }
 
   testConnection() {

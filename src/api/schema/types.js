@@ -91,6 +91,93 @@ export default (db) => {
     },
   });
 
+  const Mute = new GraphQLObjectType({
+    name: 'mute',
+    description: 'mute',
+    fields() {
+      return {
+        id: {
+          type: GraphQLID,
+          description: 'Mute ID',
+          resolve(ban) {
+            return ban.id;
+          },
+        },
+        player: {
+          type: Player,
+          description: 'Muted player',
+          resolve(mute) {
+            return db.models.player.findById(mute.uuid);
+          },
+        },
+        active: {
+          type: GraphQLBoolean,
+          description: 'Is the mute active?',
+          resolve(mute) {
+            return mute.banState;
+          },
+        },
+        reason: {
+          type: GraphQLString,
+          description: 'Mute reason',
+          resolve(mute) {
+            return mute.muteReason;
+          },
+        },
+        staff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the mute',
+          resolve(mute) {
+            return mute.muteStaff;
+          },
+        },
+        server: {
+          type: GraphQLString,
+          description: 'Scope of the mute',
+          resolve(mute) {
+            return mute.muteServer;
+          },
+        },
+        begin: {
+          type: GraphQLString,
+          description: 'Timestamp of mute creation',
+          resolve(mute) {
+            return mute.muteBegin;
+          },
+        },
+        end: {
+          type: GraphQLString,
+          description: 'Timestamp of mute expire',
+          resolve(mute) {
+            return mute.muteEnd;
+          },
+        },
+        unmuteDate: {
+          type: GraphQLString,
+          description: 'Timestamp of unmute',
+          resolve(mute) {
+            return mute.muteUnmuteDate;
+          },
+        },
+        unmuteStaff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the unban',
+          resolve(mute) {
+            return mute.muteUnmuteStaff;
+          },
+        },
+        unmuteReason: {
+          type: GraphQLString,
+          description: 'Reason of unmute',
+          resolve(mute) {
+            return mute.muteUnmuteReason;
+          },
+        },
+        // TODO: nest mute data in object
+      };
+    },
+  });
+
   const Player = new GraphQLObjectType({
     name: 'player',
     description: 'player',
@@ -135,5 +222,5 @@ export default (db) => {
     },
   });
 
-  return { Ban, Player };
+  return { Ban, Player, Mute };
 };

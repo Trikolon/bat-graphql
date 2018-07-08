@@ -1,5 +1,4 @@
 export default (sequelize, DataTypes) => {
-
   const tableOptions = {
     tableName: 'BAT_players',
     timestamps: false,
@@ -47,7 +46,8 @@ export default (sequelize, DataTypes) => {
   const player = sequelize.define('player', attributes, tableOptions);
 
   player.associate = (models) => {
-    models.player.hasMany(models.ban, {foreignKey: 'UUID', sourceKey: 'UUID'});
+    models.player.hasMany(models.ban, { foreignKey: 'UUID', sourceKey: 'UUID' });
+    models.player.hasMany(models.mute, { foreignKey: 'UUID', sourceKey: 'UUID' });
   };
 
   return player;
