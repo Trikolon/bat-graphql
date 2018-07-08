@@ -11,14 +11,14 @@ export default (db) => {
       return {
         id: {
           type: GraphQLID,
-          description: 'ban ID',
+          description: 'Ban ID',
           resolve(ban) {
             return ban.id;
           },
         },
         player: {
           type: Player,
-          description: 'banned player',
+          description: 'Banned player',
           resolve(ban) {
             return db.models.player.findById(ban.uuid);
           },
@@ -32,51 +32,56 @@ export default (db) => {
         },
         reason: {
           type: GraphQLString,
-          description: 'ban reason',
+          description: 'Ban reason',
           resolve(ban) {
             return ban.banReason;
           },
         },
         staff: {
           type: GraphQLString,
-          description: 'staff member who issued the ban',
+          description: 'Name of staff member who issued the ban',
           resolve(ban) {
             return ban.banStaff;
           },
         },
         server: {
           type: GraphQLString,
-          description: 'scope of the ban',
+          description: 'Scope of the ban',
           resolve(ban) {
             return ban.banServer;
           },
         },
         begin: {
           type: GraphQLString,
+          description: 'Timestamp of ban creation',
           resolve(ban) {
             return ban.banBegin;
           },
         },
         end: {
           type: GraphQLString,
+          description: 'Timestamp of ban expire',
           resolve(ban) {
             return ban.banEnd;
           },
         },
         unbanDate: {
           type: GraphQLString,
+          description: 'Timestamp of unban',
           resolve(ban) {
             return ban.banUnbanDate;
           },
         },
         unbanStaff: {
           type: GraphQLString,
+          description: 'Name of staff member who issued the unban',
           resolve(ban) {
             return ban.banUnbanStaff;
           },
         },
         unbanReason: {
           type: GraphQLString,
+          description: 'Reason of unban',
           resolve(ban) {
             return ban.banUnbanReason;
           },
@@ -93,28 +98,28 @@ export default (db) => {
       return {
         uuid: {
           type: GraphQLString,
-          description: 'player unique identifier',
+          description: 'Player unique identifier',
           resolve(player) {
             return player.uuid;
           },
         },
         name: {
           type: GraphQLString,
-          description: 'player nickname',
+          description: 'Player nickname',
           resolve(player) {
             return player.name;
           },
         },
         lastLogin: {
           type: GraphQLString,
-          description: 'timestamp of last login',
+          description: 'Timestamp of last login',
           resolve(player) {
             return player.lastLogin;
           },
         },
         firstLogin: {
           type: GraphQLString,
-          description: 'timestamp of first ever login',
+          description: 'Timestamp of first ever login',
           resolve(player) {
             return player.firstLogin;
           },
