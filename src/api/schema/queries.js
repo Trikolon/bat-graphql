@@ -33,7 +33,7 @@ export default (db) => {
         delete args.offset;
         delete args.first;
         return db.models.player.findAll({
-          where: args, include: [db.models.ban], offset, limit,
+          where: args, include: [db.models.ban, db.models.mute, db.models.kick, db.models.warn], offset, limit,
         });
       },
     },
@@ -52,7 +52,7 @@ export default (db) => {
           return db.models.player.findById(args.uuid);
         } if (args.name) {
           return db.models.player.findOne({
-            where: { name: args.name }, include: [db.models.ban],
+            where: { name: args.name }, include: [db.models.ban, db.models.mute, db.models.kick, db.models.warn],
           });
         }
         throw new Error('Specify either uuid or name');
