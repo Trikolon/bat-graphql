@@ -178,6 +178,58 @@ export default (db) => {
     },
   });
 
+  const Kick = new GraphQLObjectType({
+    name: 'kick',
+    description: 'kick',
+    fields() {
+      return {
+        id: {
+          type: GraphQLID,
+          description: 'Kick ID',
+          resolve(kick) {
+            return kick.id;
+          },
+        },
+        player: {
+          type: Player,
+          description: 'Kicked player',
+          resolve(kick) {
+            return db.models.player.findById(kick.uuid);
+          },
+        },
+        reason: {
+          type: GraphQLString,
+          description: 'Kick reason',
+          resolve(kick) {
+            return kick.kickReason;
+          },
+        },
+        staff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the kick',
+          resolve(kick) {
+            return kick.kickStaff;
+          },
+        },
+        server: {
+          type: GraphQLString,
+          description: 'Scope of the kick',
+          resolve(kick) {
+            return kick.kickServer;
+          },
+        },
+        date: {
+          type: GraphQLString,
+          description: 'Timestamp of kick',
+          resolve(kick) {
+            return kick.kickDate;
+          },
+        },
+        // TODO: nest kick data in object
+      };
+    },
+  });
+
   const Player = new GraphQLObjectType({
     name: 'player',
     description: 'player',
@@ -225,9 +277,16 @@ export default (db) => {
             return db.models.mute.findAll({ where: { uuid: player.uuid } });
           },
         },
+        kicks: {
+          type: new GraphQLList(Kick),
+          description: 'List of player kicks',
+          resolve(player) {
+            return db.models.kick.findAll({ where: { uuid: player.uuid } });
+          },
+        },
       };
     },
   });
 
-  return { Ban, Player, Mute };
+  return { Ban, Player, Mute, Kick };
 };
