@@ -12,7 +12,8 @@ const db = new Database(
   config.mysql.host,
   config.mysql.database,
   config.mysql.user,
-  config.mysql.password);
+  config.mysql.password,
+);
 const api = new API(config.api.hostname, config.api.port, db);
 
 // Test mysql connection

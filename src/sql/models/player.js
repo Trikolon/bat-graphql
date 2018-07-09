@@ -48,6 +48,8 @@ export default (sequelize, DataTypes) => {
   player.associate = (models) => {
     models.player.hasMany(models.ban, { foreignKey: 'UUID', sourceKey: 'UUID' });
     models.player.hasMany(models.mute, { foreignKey: 'UUID', sourceKey: 'UUID' });
+    models.player.hasMany(models.kick, { foreignKey: 'UUID', sourceKey: 'UUID' });
+    models.player.hasMany(models.warn, { foreignKey: 'entity', sourceKey: 'UUID' });
   };
 
   return player;

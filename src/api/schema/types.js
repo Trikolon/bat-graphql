@@ -99,8 +99,8 @@ export default (db) => {
         id: {
           type: GraphQLID,
           description: 'Mute ID',
-          resolve(ban) {
-            return ban.id;
+          resolve(mute) {
+            return mute.id;
           },
         },
         player: {
@@ -114,7 +114,7 @@ export default (db) => {
           type: GraphQLBoolean,
           description: 'Is the mute active?',
           resolve(mute) {
-            return mute.banState;
+            return mute.muteState;
           },
         },
         reason: {
@@ -161,7 +161,7 @@ export default (db) => {
         },
         unmuteStaff: {
           type: GraphQLString,
-          description: 'Name of staff member who issued the unban',
+          description: 'Name of staff member who issued the unmute',
           resolve(mute) {
             return mute.muteUnmuteStaff;
           },
@@ -174,6 +174,103 @@ export default (db) => {
           },
         },
         // TODO: nest mute data in object
+      };
+    },
+  });
+
+  const Kick = new GraphQLObjectType({
+    name: 'kick',
+    description: 'kick',
+    fields() {
+      return {
+        id: {
+          type: GraphQLID,
+          description: 'Kick ID',
+          resolve(kick) {
+            return kick.id;
+          },
+        },
+        player: {
+          type: Player,
+          description: 'Kicked player',
+          resolve(kick) {
+            return db.models.player.findById(kick.uuid);
+          },
+        },
+        reason: {
+          type: GraphQLString,
+          description: 'Kick reason',
+          resolve(kick) {
+            return kick.kickReason;
+          },
+        },
+        staff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the kick',
+          resolve(kick) {
+            return kick.kickStaff;
+          },
+        },
+        server: {
+          type: GraphQLString,
+          description: 'Scope of the kick',
+          resolve(kick) {
+            return kick.kickServer;
+          },
+        },
+        date: {
+          type: GraphQLString,
+          description: 'Timestamp of kick',
+          resolve(kick) {
+            return kick.kickDate;
+          },
+        },
+        // TODO: nest kick data in object
+      };
+    },
+  });
+
+  const Warn = new GraphQLObjectType({
+    name: 'warn',
+    description: 'warn',
+    fields() {
+      return {
+        id: {
+          type: GraphQLID,
+          description: 'Warn ID',
+          resolve(warn) {
+            return warn.id;
+          },
+        },
+        player: {
+          type: Player,
+          description: 'Warned player',
+          resolve(warn) {
+            return db.models.player.findById(warn.uuid);
+          },
+        },
+        reason: {
+          type: GraphQLString,
+          description: 'Warn reason',
+          resolve(warn) {
+            return warn.warnReason;
+          },
+        },
+        staff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the warn',
+          resolve(warn) {
+            return warn.warnStaff;
+          },
+        },
+        date: {
+          type: GraphQLString,
+          description: 'Timestamp of warn',
+          resolve(warn) {
+            return warn.warnDate;
+          },
+        },
+        // TODO: nest warn data in object
       };
     },
   });
@@ -218,9 +315,32 @@ export default (db) => {
             return db.models.ban.findAll({ where: { uuid: player.uuid } });
           },
         },
+        mutes: {
+          type: new GraphQLList(Mute),
+          description: 'List of player mutes',
+          resolve(player) {
+            return db.models.mute.findAll({ where: { uuid: player.uuid } });
+          },
+        },
+        kicks: {
+          type: new GraphQLList(Kick),
+          description: 'List of player kicks',
+          resolve(player) {
+            return db.models.kick.findAll({ where: { uuid: player.uuid } });
+          },
+        },
+        warns: {
+          type: new GraphQLList(Warn),
+          description: 'List of player warns',
+          resolve(player) {
+            return db.models.warn.findAll({ where: { uuid: player.uuid } });
+          },
+        },
       };
     },
   });
 
-  return { Ban, Player, Mute };
+  return {
+    Ban, Player, Mute, Kick, Warn,
+  };
 };

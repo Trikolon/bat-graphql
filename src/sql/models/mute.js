@@ -74,7 +74,7 @@ export default (sequelize, DataTypes) => {
   const mute = sequelize.define('mute', attributes, tableOptions);
 
   mute.associate = (models) => {
-    models.ban.belongsTo(models.player, { foreignKey: 'UUID', sourceKey: 'UUID' });
+    models.mute.belongsTo(models.player, { foreignKey: 'UUID', sourceKey: 'UUID' });
   };
 
   return mute;
