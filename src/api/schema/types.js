@@ -99,8 +99,8 @@ export default (db) => {
         id: {
           type: GraphQLID,
           description: 'Mute ID',
-          resolve(ban) {
-            return ban.id;
+          resolve(mute) {
+            return mute.id;
           },
         },
         player: {
@@ -161,7 +161,7 @@ export default (db) => {
         },
         unmuteStaff: {
           type: GraphQLString,
-          description: 'Name of staff member who issued the unban',
+          description: 'Name of staff member who issued the unmute',
           resolve(mute) {
             return mute.muteUnmuteStaff;
           },
@@ -216,6 +216,13 @@ export default (db) => {
           description: 'List of player bans',
           resolve(player) {
             return db.models.ban.findAll({ where: { uuid: player.uuid } });
+          },
+        },
+        mutes: {
+          type: new GraphQLList(Mute),
+          description: 'List of player mutes',
+          resolve(player) {
+            return db.models.mute.findAll({ where: { uuid: player.uuid } });
           },
         },
       };
