@@ -340,5 +340,7 @@ export default (db) => {
     },
   });
 
-  return { Ban, Player, Mute, Kick, Warn };
+  return {
+    Ban, Player, Mute, Kick, Warn,
+  };
 };

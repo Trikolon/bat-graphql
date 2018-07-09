@@ -9,7 +9,6 @@ const logger = console;
 
 export default class API {
   constructor(hostname, port, db) {
-
     this.hostname = hostname;
     this.port = port;
     this.db = db;
