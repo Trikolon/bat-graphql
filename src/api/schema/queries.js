@@ -107,6 +107,10 @@ export default (db) => {
           type: GraphQLString,
           description: 'Only show mutes by staff member nickname',
         },
+        muteState: {
+          type: GraphQLBoolean,
+          description: 'Filter by active / inactive mutes',
+        },
         first: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
