@@ -38,7 +38,12 @@ options and change its web server settings.
 {
   "api": {
     "hostname": "localhost",
-    "port": 8000
+    "port": 8000,
+    "cors": {
+      "allowedOrigins": [
+        "*"
+      ]
+    }
   },
   "mysql": {
     "host": "localhost",
