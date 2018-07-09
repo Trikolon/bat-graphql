@@ -180,5 +180,43 @@ export default (db) => {
         return db.models.kick.findById(args.id);
       },
     },
+    warns: {
+      type: new GraphQLList(Types.Warn),
+      args: {
+        warnStaff: {
+          type: GraphQLString,
+          description: 'Only show kicks by staff member nickname',
+        },
+        first: {
+          type: GraphQLInt,
+          description: 'Limits the number of results returned in the page. Defaults to 10.',
+        },
+        offset: {
+          type: GraphQLInt,
+        },
+        // TODO: alias should be the same as in types. How to filter by attributes?
+        // TODO: Date range filter
+      },
+      resolve(root, args) {
+        const offset = args.offset || 0;
+        const limit = args.first || 10;
+        delete args.offset;
+        delete args.first;
+        return db.models.warn.findAll({
+          where: args, include: [db.models.player], offset, limit,
+        });
+      },
+    },
+    warn: {
+      type: Types.Warn,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
+      },
+      resolve(root, args) {
+        return db.models.warn.findById(args.id);
+      },
+    },
   };
 };

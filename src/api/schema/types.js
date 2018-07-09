@@ -230,6 +230,51 @@ export default (db) => {
     },
   });
 
+  const Warn = new GraphQLObjectType({
+    name: 'warn',
+    description: 'warn',
+    fields() {
+      return {
+        id: {
+          type: GraphQLID,
+          description: 'Warn ID',
+          resolve(warn) {
+            return warn.id;
+          },
+        },
+        player: {
+          type: Player,
+          description: 'Warned player',
+          resolve(warn) {
+            return db.models.player.findById(warn.uuid);
+          },
+        },
+        reason: {
+          type: GraphQLString,
+          description: 'Warn reason',
+          resolve(warn) {
+            return warn.warnReason;
+          },
+        },
+        staff: {
+          type: GraphQLString,
+          description: 'Name of staff member who issued the warn',
+          resolve(warn) {
+            return warn.warnStaff;
+          },
+        },
+        date: {
+          type: GraphQLString,
+          description: 'Timestamp of warn',
+          resolve(warn) {
+            return warn.warnDate;
+          },
+        },
+        // TODO: nest warn data in object
+      };
+    },
+  });
+
   const Player = new GraphQLObjectType({
     name: 'player',
     description: 'player',
@@ -284,9 +329,16 @@ export default (db) => {
             return db.models.kick.findAll({ where: { uuid: player.uuid } });
           },
         },
+        warns: {
+          type: new GraphQLList(Warn),
+          description: 'List of player warns',
+          resolve(player) {
+            return db.models.warn.findAll({ where: { uuid: player.uuid } });
+          },
+        },
       };
     },
   });
 
-  return { Ban, Player, Mute, Kick };
+  return { Ban, Player, Mute, Kick, Warn };
 };
