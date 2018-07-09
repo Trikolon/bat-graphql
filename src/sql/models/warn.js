@@ -1,6 +1,7 @@
 export default (sequelize, DataTypes) => {
   const tableOptions = {
-    tableName: 'BAT_comments',
+    tableName: 'bat_comments',
+    // TODO: change this back to BAT_comments once issue with BAT is fixed
     timestamps: false,
   };
 
