@@ -185,7 +185,7 @@ export default (db) => {
       args: {
         warnStaff: {
           type: GraphQLString,
-          description: 'Only show kicks by staff member nickname',
+          description: 'Only show warns by staff member nickname',
         },
         first: {
           type: GraphQLInt,
