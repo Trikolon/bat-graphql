@@ -19,19 +19,22 @@ export default (db) => {
         uuid: {
           type: GraphQLString,
         },
-        first: {
+        limit: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
+          defaultValue: 10,
         },
         offset: {
           type: GraphQLInt,
         },
+        // TODO: alias should be the same as in types. How to filter by attributes?
+        // TODO: Date range filter
       },
       resolve(root, args) {
-        const offset = args.offset || 0;
-        const limit = args.first || 10;
+        const { offset, limit } = args;
         delete args.offset;
-        delete args.first;
+        delete args.limit;
+        delete args.desc;
         return db.models.player.findAll({
           where: args,
           include: [db.models.ban, db.models.mute, db.models.kick, db.models.warn],
@@ -73,23 +76,32 @@ export default (db) => {
           type: GraphQLBoolean,
           description: 'Filter by active / inactive bans',
         },
-        first: {
+        limit: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
+          defaultValue: 10,
         },
         offset: {
           type: GraphQLInt,
+        },
+        desc: {
+          type: GraphQLBoolean,
+          description: 'Reverse sorting order true = descending',
+          defaultValue: true,
         },
         // TODO: alias should be the same as in types. How to filter by attributes?
         // TODO: Date range filter
       },
       resolve(root, args) {
-        const offset = args.offset || 0;
-        const limit = args.first || 10;
+        const { offset, limit } = args;
+        const order = [
+          ['id', args.desc ? 'DESC' : 'ASC'],
+        ];
         delete args.offset;
-        delete args.first;
+        delete args.limit;
+        delete args.desc;
         return db.models.ban.findAll({
-          where: args, include: [db.models.player], offset, limit,
+          where: args, include: [db.models.player], offset, limit, order,
         });
       },
     },
@@ -115,23 +127,32 @@ export default (db) => {
           type: GraphQLBoolean,
           description: 'Filter by active / inactive mutes',
         },
-        first: {
+        limit: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
+          defaultValue: 10,
         },
         offset: {
           type: GraphQLInt,
+        },
+        desc: {
+          type: GraphQLBoolean,
+          description: 'Reverse sorting order true = descending',
+          defaultValue: true,
         },
         // TODO: alias should be the same as in types. How to filter by attributes?
         // TODO: Date range filter
       },
       resolve(root, args) {
-        const offset = args.offset || 0;
-        const limit = args.first || 10;
+        const { offset, limit } = args;
+        const order = [
+          ['id', args.desc ? 'DESC' : 'ASC'],
+        ];
         delete args.offset;
-        delete args.first;
+        delete args.limit;
+        delete args.desc;
         return db.models.mute.findAll({
-          where: args, include: [db.models.player], offset, limit,
+          where: args, include: [db.models.player], offset, limit, order,
         });
       },
     },
@@ -153,23 +174,32 @@ export default (db) => {
           type: GraphQLString,
           description: 'Only show kicks by staff member nickname',
         },
-        first: {
+        limit: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
+          defaultValue: 10,
         },
         offset: {
           type: GraphQLInt,
+        },
+        desc: {
+          type: GraphQLBoolean,
+          description: 'Reverse sorting order true = descending',
+          defaultValue: true,
         },
         // TODO: alias should be the same as in types. How to filter by attributes?
         // TODO: Date range filter
       },
       resolve(root, args) {
-        const offset = args.offset || 0;
-        const limit = args.first || 10;
+        const { offset, limit } = args;
+        const order = [
+          ['id', args.desc ? 'DESC' : 'ASC'],
+        ];
         delete args.offset;
-        delete args.first;
+        delete args.limit;
+        delete args.desc;
         return db.models.kick.findAll({
-          where: args, include: [db.models.player], offset, limit,
+          where: args, include: [db.models.player], offset, limit, order,
         });
       },
     },
@@ -191,23 +221,32 @@ export default (db) => {
           type: GraphQLString,
           description: 'Only show warns by staff member nickname',
         },
-        first: {
+        limit: {
           type: GraphQLInt,
           description: 'Limits the number of results returned in the page. Defaults to 10.',
+          defaultValue: 10,
         },
         offset: {
           type: GraphQLInt,
+        },
+        desc: {
+          type: GraphQLBoolean,
+          description: 'Reverse sorting order true = descending',
+          defaultValue: true,
         },
         // TODO: alias should be the same as in types. How to filter by attributes?
         // TODO: Date range filter
       },
       resolve(root, args) {
-        const offset = args.offset || 0;
-        const limit = args.first || 10;
+        const { offset, limit } = args;
+        const order = [
+          ['id', args.desc ? 'DESC' : 'ASC'],
+        ];
         delete args.offset;
-        delete args.first;
+        delete args.limit;
+        delete args.desc;
         return db.models.warn.findAll({
-          where: args, include: [db.models.player], offset, limit,
+          where: args, include: [db.models.player], offset, limit, order,
         });
       },
     },
