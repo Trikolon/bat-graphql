@@ -114,7 +114,7 @@ export default (db) => {
           type: GraphQLBoolean,
           description: 'Is the mute active?',
           resolve(mute) {
-            return mute.banState;
+            return mute.muteState;
           },
         },
         reason: {
