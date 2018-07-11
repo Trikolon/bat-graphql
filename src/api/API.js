@@ -62,7 +62,12 @@ export default class API {
     }
 
     res.header('Access-Control-Allow-Origin', originResult);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+    // If it's a pre-flight request reply to client and interrupt middleware chain
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
     return next();
   }
 }
