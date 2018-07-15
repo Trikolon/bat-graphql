@@ -23,10 +23,10 @@ export default class API {
 
     // Intialize webserver
     this.app = express();
-    // TODO: CORS
 
-    // Register api route
+    // CORS
     this.app.use((...args) => this.corsHandler(...args));
+    // Register api route
     this.app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: this.schema }));
     this.app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
   }
