@@ -1,12 +1,7 @@
 {
   "api": {
     "hostname": "localhost",
-    "port": 8000,
-    "cors": {
-      "allowedOrigins": [
-        "*"
-      ]
-    }
+    "port": 8000
   },
   "mysql": {
     "host": "localhost",
