@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/Trikolon/bat-graphql#readme",
   "dependencies": {
-    "apollo-server": "^2.0.4",
+    "apollo-server": "^2.2.5",
     "graphql": "^0.13.2",
     "mysql2": "^1.6.1",
     "sequelize": "^4.38.0"
