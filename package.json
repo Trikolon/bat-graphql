@@ -21,7 +21,7 @@
   "dependencies": {
     "apollo-server": "^2.0.4",
     "graphql": "^0.13.2",
-    "mysql2": "^1.6.1",
+    "mysql2": "^1.6.4",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
